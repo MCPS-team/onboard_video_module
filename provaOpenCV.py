@@ -67,9 +67,7 @@ def read_video():
 
 			cv2.imshow('frame',gray)
 
-			for _ in range(10):
-				ret, frame = cap.read()
-
+			time.sleep(0.1)
 		else:
 			print("no frame read")
 			break
