@@ -34,6 +34,8 @@ class FrameBuffer():
 
 	def poth_hole_detected(self):
 		global potHoleID
+		pid = potHoleID
+		potHoleID += 1
 		with self.condition:
 			if not self.condition.acquire():
 				self.condition.wait()
@@ -43,12 +45,12 @@ class FrameBuffer():
 			self.condition.release()
 			self.condition.notifyAll()
 
-		path =("{}/{}/".format(self.path, potHoleID))
-		potHoleID += 1
+		path =("{}/{}/".format(self.path, pid))
+		
 		if not os.path.exists(path):
 			os.makedirs(path)
 		for f in self.buffer:
-			cv2.imwrite("{}path{}.png".format(path, time.time()), f)
+			cv2.imwrite("{}{}.png".format(path,"{}-{}".format(pid, time.time())), f)
 		self.__flush()
 		
 def read_video():
